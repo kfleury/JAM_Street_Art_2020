@@ -1,23 +1,21 @@
-// import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js'
 
-const canvas = document.getElementById('mycanvas');
+const app = new PIXI.Application();
 
-const app = new PIXI.Application({
-    view: canvas,
-    width: window.innerWidth,
-    height: window.innerHeight
+document.body.appendChild(app.view);
+
+app.loader.add('bunny', 'bird.png').load((loader, resources) => {
+    const bunny = new PIXI.Sprite(resources.bunny.texture);
+
+    bunny.x = app.renderer.width / 2;
+    bunny.y = app.renderer.height / 2;
+
+    bunny.anchor.x = 0.5;
+    bunny.anchor.y = 0.5;
+
+    app.stage.addChild(bunny);
+
+    app.ticker.add(() => {
+        bunny.rotation += 0.01;
+    });
 });
-
-const texture = PIXI.Texture.from('bird.png');
-const img = new PIXI.Sprite(texture);
-img.x = app.renderer.width / 2;
-img.y = app.renderer.height / 2;
-img.anchor.x = 0.5;
-img.anchor.y = 0.5;
-app.stage.addChild(img);
-
-app.ticker.add(animate);
-
-function animate() {
-    img.rotation += 0.1;
-}
