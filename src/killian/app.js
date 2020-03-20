@@ -1,22 +1,22 @@
+const canvas = document.getElementById('mycanvas');
+
 const app = new PIXI.Application({
+    view: canvas,
     width: window.innerWidth,
     height: window.innerHeight,
 });
 
-document.body.appendChild(app.view);
+const texture = PIXI.Texture.from('image/ball.png');
+const img = new PIXI.Sprite(texture);
 
-app.loader.add('bird', 'bird.png').load((loader, resources) => {
-    const bird = new PIXI.Sprite(resources.bird.texture);
+img.x = app.renderer.width / 2;
+img.y = app.renderer.height / 2;
 
-    bird.x = app.renderer.width / 2;
-    bird.y = app.renderer.height / 2;
+img.anchor.x = 0.5;
+img.anchor.y = 0.5;
 
-    bird.anchor.x = 0.5;
-    bird.anchor.y = 0.5;
+app.stage.addChild(img);
 
-    app.stage.addChild(bird);
-
-    app.ticker.add(() => {
-        bird.rotation += 0.01;
-    });
+app.ticker.add(() => {
+    img.rotation += 0.01;
 });
