@@ -1,19 +1,22 @@
-const app = new PIXI.Application();
+const app = new PIXI.Application({
+    width: window.innerWidth,
+    height: window.innerHeight,
+});
 
 document.body.appendChild(app.view);
 
-app.loader.add('bunny', 'bird.png').load((loader, resources) => {
-    const bunny = new PIXI.Sprite(resources.bunny.texture);
+app.loader.add('bird', 'bird.png').load((loader, resources) => {
+    const bird = new PIXI.Sprite(resources.bird.texture);
 
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
+    bird.x = app.renderer.width / 2;
+    bird.y = app.renderer.height / 2;
 
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
+    bird.anchor.x = 0.5;
+    bird.anchor.y = 0.5;
 
-    app.stage.addChild(bunny);
+    app.stage.addChild(bird);
 
     app.ticker.add(() => {
-        bunny.rotation += 0.01;
+        bird.rotation += 0.01;
     });
 });
