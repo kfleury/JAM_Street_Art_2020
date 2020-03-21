@@ -29853,7 +29853,7 @@ function deprecation(core) {
 
         /**
          * @class
-         * @private
+         * @public
          * @name TextureCache
          * @memberof PIXI
          * @see PIXI.utils.TextureCache
