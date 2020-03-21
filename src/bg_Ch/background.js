@@ -22,9 +22,11 @@ function create_obstacle(pathfile) {
     const texture = PIXI.Texture.from(pathfile);
     const sprite = new PIXI.Sprite(texture);
     sprite.x = 1920;
-    sprite.y = getRandomPos(random_pos);
+    sprite.y = getRandomPos(random_pos) + 100;
     sprite.anchor.x = 0;
     sprite.anchor.y = 0;
+    sprite.scale.x = 0.1;
+    sprite.scale.y = 0.1;
     app.stage.addChild(sprite);
     return (sprite);
 }
