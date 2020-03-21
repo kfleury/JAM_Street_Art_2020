@@ -30,6 +30,7 @@ let road = create_sprite('road.png');
 let spead = window.innerWidth / 150;
 let player = create_sprite('monster.png');
 
+player.anchor.set(0.5);
 player.x = app.view.width / 3;
 player.y = app.view.height / 1.22;
 
