@@ -2,12 +2,18 @@ const canvas = document.getElementById('mycanvas');
 
 let etat = 0;
 let jumpValue = 20;
-const random_pos = [600, 400, 200];
+const random_pos = [600, 800, 1000];
+let value = 0;
+let rectangle = new PIXI.Rectangle(0, 0, 65, 77);
 
 const app = new PIXI.Application({
     view: canvas,
     width: window.innerWidth,
     height: window.innerHeight,
+    antialias: true,
+    transparent: false,
+    forceCanvas: true,
+    resolution: 1
 });
 
 app.stage.interactive = true;
@@ -42,14 +48,24 @@ function create_sprite(pathfile) {
     return (sprite);
 }
 
-console.log(Math.floor(Math.random() * 1000));
+function setup_player(pathfile) {
+    const texture = new PIXI.Texture(pathfile, rectangle);
+    const sprite = new PIXI.Sprite(texture);
+    texture._updateUvs();
+    sprite.x = 0;
+    sprite.y = 0;
+    sprite.anchor.x = 0;
+    sprite.anchor.y = 0;
+    app.stage.addChild(sprite);
+    return (sprite);
+}
 
 let sky = create_sprite('Sky.png');
 let buildings = create_sprite('buildings.png');
 let graph = create_sprite('wall_graph.png');
 let road = create_sprite('road.png');
 let spead = window.innerWidth / 150;
-let player = create_sprite('monster.png');
+let player = setup_player('bart.png');
 let obstacle = create_obstacle('pigeon.png');
 
 player.anchor.set(0.5);
@@ -82,6 +98,14 @@ app.ticker.add(() => {
         graph.x = 0;
     if (road.x < -1920)
         road.x = 0;
+    // sprite player
+    value += 1;
+    if (value === 60) {
+        rectangle.x += 80;
+        value = 0;
+    }
+    if (rectangle.x === 880)
+        rectangle.x = 0;
     sky.x -= spead / 2;
     buildings.x -= spead / 1.8;
     graph.x -= spead / 1.4;
