@@ -13,10 +13,9 @@ const app = new PIXI.Application({
 app.stage.interactive = true;
 app.stage.addListener('pointerdown', onTouchStart);
 
-function getRandomPos(fruits) {
-    let num = Math.floor(Math.random() * fruits.length);
-    console.log(num);
-    return fruits[num];
+function getRandomPos(number) {
+    let num = Math.floor(Math.random() * number.length);
+    return number[num];
 }
 
 function create_obstacle(pathfile) {
@@ -49,7 +48,7 @@ let graph = create_sprite('wall_graph.png');
 let road = create_sprite('road.png');
 let spead = window.innerWidth / 150;
 let player = create_sprite('monster.png');
-let obstacle = create_obstacle('monster.png');
+let obstacle = create_obstacle('pigeon.png');
 
 player.x = app.view.width / 3;
 player.y = app.view.height / 1.22;
