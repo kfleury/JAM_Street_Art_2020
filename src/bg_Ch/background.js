@@ -2,7 +2,7 @@ const canvas = document.getElementById('mycanvas');
 
 let etat = 0;
 let jumpValue = 20;
-const random_pos = [600, 800];
+const random_pos = [680, 760];
 let value = 0;
 let playerSheet = {};
 let score = 0;
@@ -138,7 +138,7 @@ app.ticker.add(() => {
     }
     if (sky.x < -1920)
         sky.x = 0;
-    if (obstacle.x < 0 && over != 1) {
+    if (obstacle.x < -10 && over != 1) {
         obstacle.x = 1920;
         obstacle.y = getRandomPos(random_pos);
     }
@@ -152,7 +152,11 @@ app.ticker.add(() => {
     buildings.x -= spead / 1.8;
     graph.x -= spead / 1.4;
     road.x -= spead;
-    obstacle.x -= spead / 0.4;
+    if (score / 100 > 12) {
+        obstacle.x -= score / 100;//spead / 0.4;
+    } else {
+        obstacle.x -= 12;
+    }
     if (over === 0) {
         score += 1;
         scoring.text = score.toString(10);
