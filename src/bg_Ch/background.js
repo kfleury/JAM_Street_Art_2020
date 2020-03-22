@@ -4,7 +4,7 @@ let etat = 0;
 let jumpValue = 20;
 const random_pos = [600, 800, 1000];
 let value = 0;
-let rectangle = new PIXI.Rectangle(0, 0, 65, 77);
+let playerSheet = {};
 
 const app = new PIXI.Application({
     view: canvas,
@@ -48,29 +48,54 @@ function create_sprite(pathfile) {
     return (sprite);
 }
 
-function setup_player(pathfile) {
-    const texture = new PIXI.Texture(pathfile, rectangle);
-    const sprite = new PIXI.Sprite(texture);
-    texture._updateUvs();
-    sprite.x = 0;
-    sprite.y = 0;
-    sprite.anchor.x = 0;
-    sprite.anchor.y = 0;
-    app.stage.addChild(sprite);
-    return (sprite);
-}
+app.loader.add("player", "bart.png");
 
 let sky = create_sprite('Sky.png');
 let buildings = create_sprite('buildings.png');
 let graph = create_sprite('wall_graph.png');
 let road = create_sprite('road.png');
 let spead = window.innerWidth / 150;
-let player = setup_player('bart.png');
+let player;
 let obstacle = create_obstacle('pigeon.png');
 
-player.anchor.set(0.5);
-player.x = app.view.width / 3;
-player.y = app.view.height / 1.22;
+function doneLoading(e) {
+    createPlayerSheet();
+    createPlayer();
+}
+doneLoading();
+function createPlayerSheet() {
+    let ssheet = new PIXI.BaseTexture(app.loader.resources["player"].url);
+    let  w = 80;
+    let h = 80;
+
+    playerSheet["running"] = [
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(0 *w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(1 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(2 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(3 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(4 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(5 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(6 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(7 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(8 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(9 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(10 * w, 0, w, h)),
+        new PIXI.Texture(ssheet, new PIXI.Rectangle(11 * w, 0, w, h)),
+    ];
+};
+
+function createPlayer() {
+    player = new PIXI.AnimatedSprite(playerSheet.running);
+    player.anchor.set(0.5);
+    player.animationSpeed = .3;
+    player.loop = true;
+    player.x = app.view.width / 3;
+    player.y = app.view.height / 1.22;
+    player.scale.set(2);
+    app.stage.addChild(player);
+    player.play();
+    console.log("oui");
+}
 
 function onTouchStart() {
     etat = 1;
@@ -98,14 +123,6 @@ app.ticker.add(() => {
         graph.x = 0;
     if (road.x < -1920)
         road.x = 0;
-    // sprite player
-    value += 1;
-    if (value === 60) {
-        rectangle.x += 80;
-        value = 0;
-    }
-    if (rectangle.x === 880)
-        rectangle.x = 0;
     sky.x -= spead / 2;
     buildings.x -= spead / 1.8;
     graph.x -= spead / 1.4;
