@@ -30,7 +30,7 @@ function create_obstacle(pathfile) {
     const texture = PIXI.Texture.from(pathfile);
     const sprite = new PIXI.Sprite(texture);
     sprite.x = 1920;
-    sprite.y = getRandomPos(random_pos) + 100;
+    sprite.y = getRandomPos(random_pos);
     sprite.anchor.x = 0;
     sprite.anchor.y = 0;
     sprite.scale.x = 0.1;
@@ -153,7 +153,7 @@ app.ticker.add(() => {
     graph.x -= spead / 1.4;
     road.x -= spead;
     if (score / 100 > 12) {
-        obstacle.x -= score / 100;//spead / 0.4;
+        obstacle.x -= score / 100;
     } else {
         obstacle.x -= 12;
     }
