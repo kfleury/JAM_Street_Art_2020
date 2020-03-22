@@ -51,7 +51,7 @@ function create_sprite(pathfile) {
 }
 
 function create_score(score) {
-    let text = new PIXI.Text(score.toString(10),{fontFamily : 'Arial', fontSize: 24, fill : 0x00ff00, align : 'center'});
+    let text = new PIXI.Text(score.toString(),{fontFamily : 'Arial', fontSize: 24, fill : 0x00ff00, align : 'center'});
     text.anchor.x = 0;
     text.anchor.y = 0;
     text.scale.x = 5;
@@ -119,8 +119,9 @@ app.ticker.add(() => {
     if (obstacle.x > player.x && obstacle.x < player.x + 80)
         if (player.y < obstacle.y + 80 && player.y > obstacle.y - 80) {
             let game_over = new PIXI.Text("Game Over",{fontFamily : 'Arial', fontSize: 50, fill : 0x00ff00, align : 'center'});
-            game_over.anchor.x = app.view.height/2;
-            game_over.anchor.y = app.view.width/2;
+            game_over.anchor.set(0.5);
+            game_over.x = app.view.width / 2;
+            game_over.y = app.view.height / 2;
             over = 1;
             player.x = -1000;
             obstacle.x = -1000;
@@ -151,6 +152,8 @@ app.ticker.add(() => {
     graph.x -= spead / 1.4;
     road.x -= spead;
     obstacle.x -= spead / 0.4;
-    score += 1;
-    scoring.text = score.toString(10);
+    if (over === 0) {
+        score += 1;
+        scoring.text = score.toString(10);
+    }
 });
