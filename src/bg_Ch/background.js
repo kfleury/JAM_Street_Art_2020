@@ -5,6 +5,7 @@ let jumpValue = 20;
 const random_pos = [600, 800, 1000];
 let value = 0;
 let playerSheet = {};
+let score = 0;
 
 const app = new PIXI.Application({
     view: canvas,
@@ -48,6 +49,16 @@ function create_sprite(pathfile) {
     return (sprite);
 }
 
+function create_score(score) {
+    let text = new PIXI.Text(score.toString(10),{fontFamily : 'Arial', fontSize: 24, fill : 0x00ff00, align : 'center'});
+    text.anchor.x = 0;
+    text.anchor.y = 0;
+    text.scale.x = 5;
+    text.scale.y = 5;
+    app.stage.addChild(text);
+    return (text);
+}
+
 app.loader.add("player", "bart.png");
 
 let sky = create_sprite('Sky.png');
@@ -57,6 +68,7 @@ let road = create_sprite('road.png');
 let spead = window.innerWidth / 150;
 let player;
 let obstacle = create_obstacle('pigeon.png');
+let scoring = create_score(score);
 
 function doneLoading(e) {
     createPlayerSheet();
@@ -128,4 +140,6 @@ app.ticker.add(() => {
     graph.x -= spead / 1.4;
     road.x -= spead;
     obstacle.x -= spead / 0.4;
+    score += 1;
+    scoring.text = score.toString(10);
 });
