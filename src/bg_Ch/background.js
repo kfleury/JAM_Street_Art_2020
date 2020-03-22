@@ -125,6 +125,7 @@ app.ticker.add(() => {
             over = 1;
             player.x = -1000;
             obstacle.x = -1000;
+            app.stage.addChild(game_over);
         }
     if (etat === 1) {
         player.y -= jumpValue;
