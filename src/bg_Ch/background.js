@@ -2,10 +2,11 @@ const canvas = document.getElementById('mycanvas');
 
 let etat = 0;
 let jumpValue = 20;
-const random_pos = [600, 800, 1000];
+const random_pos = [600, 800];
 let value = 0;
 let playerSheet = {};
 let score = 0;
+let over = 0;
 
 const app = new PIXI.Application({
     view: canvas,
@@ -58,6 +59,7 @@ function create_score(score) {
     app.stage.addChild(text);
     return (text);
 }
+
 
 app.loader.add("player", "bart.png");
 
@@ -114,6 +116,15 @@ function onTouchStart() {
 }
 
 app.ticker.add(() => {
+    if (obstacle.x > player.x && obstacle.x < player.x + 80)
+        if (player.y < obstacle.y + 80 && player.y > obstacle.y - 80) {
+            let game_over = new PIXI.Text("Game Over",{fontFamily : 'Arial', fontSize: 50, fill : 0x00ff00, align : 'center'});
+            game_over.anchor.x = app.view.height/2;
+            game_over.anchor.y = app.view.width/2;
+            over = 1;
+            player.x = -1000;
+            obstacle.x = -1000;
+        }
     if (etat === 1) {
         player.y -= jumpValue;
         jumpValue -= 0.8;
@@ -125,7 +136,7 @@ app.ticker.add(() => {
     }
     if (sky.x < -1920)
         sky.x = 0;
-    if (obstacle.x < 0) {
+    if (obstacle.x < 0 && over != 1) {
         obstacle.x = 1920;
         obstacle.y = getRandomPos(random_pos);
     }
